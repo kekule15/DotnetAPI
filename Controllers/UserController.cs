@@ -106,5 +106,26 @@ namespace DotnetAPI.Controllers
             throw new Exception("Error updating this user");
 
         }
+
+        [HttpDelete("DeleteUser/{userId}")]
+        public IActionResult DeleteUser(int userId)
+        {
+
+            string sql = @$"
+            DELETE FROM TutorialAppSchema.Users 
+            WHERE UserId = {userId}";
+
+            Console.WriteLine(sql);
+
+            if (_dataDapper.ExecuteSql(sql) > 0)
+            {
+                return Ok();
+            }
+            throw new Exception("Error Deleting this user");
+
+
+        }
     }
+
+
 }
