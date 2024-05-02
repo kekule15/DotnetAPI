@@ -53,7 +53,7 @@ namespace DotnetAPI.Controllers
         }
 
         [HttpPut("EditUserSalary")]
-        public IActionResult EditUser(UserSalary user)
+        public IActionResult EditUserSalary(UserSalary user)
         {
 
             string sql = @$"
