@@ -23,14 +23,14 @@ namespace DotnetAPI.Controllers
         }
 
 
-        [HttpGet("GetUserSalary/{userId}")]
+        [HttpGet("Get/{userId}")]
         public UserSalary GetUserSalary(int userId)
         {
             string sql = @$"SELECT * FROM TutorialAppSchema.UserSalary WHERE UserId = {userId}";
             return _dataDapper.LoadSingleData<UserSalary>(sql);
         }
 
-        [HttpPost("AddUserSalary")]
+        [HttpPost("Add")]
         public IActionResult AddUserSalary(UserSalary user)
         {
             string sql = @$"
@@ -52,7 +52,7 @@ namespace DotnetAPI.Controllers
 
         }
 
-        [HttpPut("EditUserSalary")]
+        [HttpPut("Edit")]
         public IActionResult EditUserSalary(UserSalary user)
         {
 
@@ -71,7 +71,7 @@ namespace DotnetAPI.Controllers
 
         }
 
-        [HttpDelete("DeleteUserSalary/{userId}")]
+        [HttpDelete("Delete/{userId}")]
         public IActionResult DeleteUserSalary(int userId)
         {
 
