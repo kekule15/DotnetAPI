@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DotnetAPI.Data;
 using DotnetAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,17 @@ namespace DotnetAPI.Controllers
 
         readonly DataContextEF _entityFramwork;
 
+        IMapper _mapper;
+
 
         public UserEFController(IConfiguration configuration)
         {
             _entityFramwork = new DataContextEF(configuration);
 
-            // Console.WriteLine($"Connection string {configuration.GetConnectionString("DefaultConnection")}");
-            Console.WriteLine(configuration.GetConnectionString("DefaultConnection"));
+            _mapper = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<UserToAddDTO, User>()));
+
+
+            // Console.WriteLine(configuration.GetConnectionString("DefaultConnection"));
         }
 
 
@@ -53,14 +58,18 @@ namespace DotnetAPI.Controllers
         [HttpPost("AddUser")]
         public IActionResult AddUser(UserToAddDTO user)
         {
-            User userDb = new()
-            {
-                Active = user.Active,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Gender = user.Gender,
-                Email = user.Email
-            };
+            // User userDb = new()
+            // {
+            //     Active = user.Active,
+            //     FirstName = user.FirstName,
+            //     LastName = user.LastName,
+            //     Gender = user.Gender,
+            //     Email = user.Email
+            // };
+
+            //  OR 
+            
+            User userDb = _mapper.Map<User>(user);
             _entityFramwork.Add(userDb);
 
             if (_entityFramwork.SaveChanges() > 0)
